@@ -6,14 +6,23 @@ public class close : MonoBehaviour
 {
     [SerializeField] float speed = 10f;
     [SerializeField] float destroyTime = 3f;
-    // Start is called before the first frame update
+
+    Game game;
     void Start()
     {
-        
+        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        if(game.gameStatus == Game.GameStatus.OnGame)
+        {
+            Move();
+        }
+    }
+
+    void Move()
     {
         transform.position += Vector3.left * Time.deltaTime * speed;
         Destroy(gameObject, destroyTime);

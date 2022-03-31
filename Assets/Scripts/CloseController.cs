@@ -10,14 +10,14 @@ public class CloseController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartGenerate();
+        Game game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game.OnGame += StartGenerate;
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-
 
     void StartGenerate()
     {
