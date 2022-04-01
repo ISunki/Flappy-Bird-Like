@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isDead = false;
     [SerializeField] Score scoreText;
     [SerializeField] AudioClip flySound;
+    [SerializeField] GameObject HitVFX;
 
     Vector3 initPosition;
 
@@ -16,6 +17,9 @@ public class PlayerController : MonoBehaviour
     Game game;
     Animator animator;
     AudioSource audioSource;
+    BoxCollider2D boxCollider2D;
+    SpriteRenderer spriteRenderer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +28,8 @@ public class PlayerController : MonoBehaviour
         game = GetComponent<Game>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         initPosition = transform.position;
 
         rb.simulated = false;
@@ -57,8 +63,6 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Pipe")
         {
-            game.gameStatus = Game.GameStatus.GameOver;
-            game.GameOver();
             Die();
         }
     }
@@ -73,10 +77,12 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
+        game.GameOver();
+        boxCollider2D.enabled = false;
         animator.SetBool("isDead", true);
         isDead = true;
-        rb.Sleep();
-        
+        Instantiate(HitVFX, transform);
+        spriteRenderer.enabled = false;
     }
 
     void Init()
@@ -84,10 +90,9 @@ public class PlayerController : MonoBehaviour
         
         transform.position = initPosition;
         rb.simulated = false;
-        rb.WakeUp();
+        boxCollider2D.enabled = true;
         animator.SetBool("isDead", false);
-
         isDead = false;
-
+        spriteRenderer.enabled = true;
     }
 }
