@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -17,27 +14,26 @@ public class Game : MonoBehaviour
     [SerializeField] GameObject onGamePanel;
     [SerializeField] GameObject gameOverPanel;
 
-    [SerializeField] Button startButton;
-    [SerializeField] AudioClip ExplosionSFX;
+    [SerializeField] AudioClip explosionSfx;
 
     public event Action OnGame;
     public event Action EndGame;
     public event Action ReStartGame;
 
-    AudioSource audioSource;
+    private AudioSource audioSource;
 
     public GameStatus gameStatus = GameStatus.Ready;
     
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         readyPanel.SetActive(gameStatus == GameStatus.Ready);
         onGamePanel.SetActive(gameStatus == GameStatus.OnGame);
@@ -47,30 +43,21 @@ public class Game : MonoBehaviour
     public void StartGame()
     {
         gameStatus = GameStatus.OnGame;
-        if (OnGame!= null)
-        {
-            OnGame();
-        }
+        OnGame?.Invoke();
     }
 
     public void GameOver()
     {
         gameStatus = GameStatus.GameOver;
-        if (EndGame!= null)
-        {
-            EndGame();
-        }
+        EndGame?.Invoke();
         audioSource.Stop();
-        audioSource.PlayOneShot(ExplosionSFX);
+        audioSource.PlayOneShot(explosionSfx);
     }
 
     public void ReStart()
     {
         gameStatus = GameStatus.Ready;
-        if (ReStartGame != null)
-        {
-            ReStartGame();
-        }
+        ReStartGame?.Invoke();
         audioSource.Play();
     }
 }

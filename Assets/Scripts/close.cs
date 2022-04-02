@@ -7,14 +7,15 @@ public class close : MonoBehaviour
     [SerializeField] float speed = 10f;
     [SerializeField] float destroyTime = 3f;
 
-    Game game;
-    void Start()
+    private Game game;
+
+    private void Start()
     {
         game = GameObject.FindWithTag("Player").GetComponent<Game>();
 
     }
 
-    void Update()
+    private void Update()
     {
         if(game.gameStatus == Game.GameStatus.OnGame)
         {

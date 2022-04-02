@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Pipe : MonoBehaviour
 {
@@ -11,9 +10,9 @@ public class Pipe : MonoBehaviour
 
     float t = 0;
 
-    // Start is called before the first frame update
 
     private Game game;
+    // Start is called before the first frame update
 
     private void Start()
     {
@@ -41,7 +40,7 @@ public class Pipe : MonoBehaviour
         int offset = Random.Range(minOffset, maxOffset);
         transform.position = new Vector3(5,offset,0); 
     }
-
+    
     void Move()
     {
         transform.position += Vector3.left * Time.deltaTime * speed;
