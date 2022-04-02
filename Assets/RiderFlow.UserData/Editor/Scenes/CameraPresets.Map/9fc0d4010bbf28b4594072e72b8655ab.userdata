@@ -1,0 +1,28 @@
+{
+  "9fd2b9d77fb50b5499fad0580a7a4ec1": {
+    "sceneGuid": "9fc0d4010bbf28b4594072e72b8655ab",
+    "uniqueCameraId": "9fd2b9d77fb50b5499fad0580a7a4ec1",
+    "name": "Player",
+    "pointX": -1.05,
+    "pointY": 2.42,
+    "pointZ": 0.0,
+    "directionX": 0.0,
+    "directionY": 0.0,
+    "directionZ": 0.0,
+    "directionW": 1.0,
+    "zoom": 0.707672238
+  },
+  "89bdead8e23a428478067c0cff737f2e": {
+    "sceneGuid": "9fc0d4010bbf28b4594072e72b8655ab",
+    "uniqueCameraId": "89bdead8e23a428478067c0cff737f2e",
+    "name": "Far",
+    "pointX": -0.820483446,
+    "pointY": 1.29473364,
+    "pointZ": 0.00270485878,
+    "directionX": 0.0,
+    "directionY": 0.0,
+    "directionZ": 0.0,
+    "directionW": 1.0,
+    "zoom": 6.010169
+  }
+}
