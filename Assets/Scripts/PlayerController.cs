@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     AudioSource audioSource;
     BoxCollider2D boxCollider2D;
     SpriteRenderer spriteRenderer;
+    private static readonly int IsDead = Animator.StringToHash("isDead");
 
 
     // Start is called before the first frame update
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Pipe")
+        if (other.gameObject.CompareTag("Pipe"))
         {
             Die();
         }
@@ -75,23 +76,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Die()
+    private void Die()
     {
         game.GameOver();
         boxCollider2D.enabled = false;
-        animator.SetBool("isDead", true);
+        animator.SetBool(id: IsDead, true);
         isDead = true;
         Instantiate(HitVFX, transform);
         spriteRenderer.enabled = false;
     }
 
-    void Init()
+    private void Init()
     {
         
         transform.position = initPosition;
         rb.simulated = false;
         boxCollider2D.enabled = true;
-        animator.SetBool("isDead", false);
+        animator.SetBool(IsDead, false);
         isDead = false;
         spriteRenderer.enabled = true;
     }

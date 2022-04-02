@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Pipe : MonoBehaviour
 {
-    [SerializeField] float speed = 10f;
-    [SerializeField] float resetTime = 10f;
-    [SerializeField] int minOffset = -3;
-    [SerializeField] int maxOffset = 3;
+    [SerializeField]  float speed = 10f;
+    [SerializeField]  float resetTime = 10f;
+    [SerializeField]  int minOffset = -3;
+    [SerializeField]  int maxOffset = 3;
 
     float t = 0;
 
     // Start is called before the first frame update
-    
-    Game game;
 
-    void Start()
+    private Game game;
+
+    private void Start()
     {
         Init();
         game = GameObject.FindWithTag("Player").GetComponent<Game>();
@@ -46,5 +46,7 @@ public class Pipe : MonoBehaviour
     {
         transform.position += Vector3.left * Time.deltaTime * speed;
     }
+    
+    
 
 }

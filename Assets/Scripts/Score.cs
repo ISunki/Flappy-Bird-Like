@@ -36,7 +36,7 @@ public class Score : MonoBehaviour
         scoreNumber ++;
     }
 
-    public void Init()
+    private void Init()
     {
         scoreNumber = 0;
     }
