@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isDead = false;
     [SerializeField] Score scoreText;
     [SerializeField] AudioClip flySound;
-    [SerializeField] GameObject HitVFX;
+    [SerializeField] GameObject hitVFX;
 
     Vector3 initPosition;
 
@@ -33,14 +33,13 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         initPosition = transform.position;
 
-        rb.simulated = false;
         game.OnGame += StartGame;
         game.ReStartGame += Init;
     }
 
     private void StartGame()
     {
-        rb.simulated = true;
+        
     }
 
     // Update is called once per frame
@@ -51,23 +50,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Fly()
-    {
-        if (Input.GetMouseButtonDown(0) && !isDead)
-        {
-            rb.velocity = Vector2.zero;
-            rb.AddForce(Vector2.up * speed);
-            audioSource.PlayOneShot(flySound);
-        }
+    {        
+        var x = Input.GetAxis("Horizontal");
+        var y = Input.GetAxis("Vertical");
+        transform.position += new Vector3(x, y) * Time.deltaTime * speed;
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Pipe"))
-        {
-            Die();
-        }
-    }
-
+    
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.name == "ScoreBoard")
@@ -82,7 +70,7 @@ public class PlayerController : MonoBehaviour
         boxCollider2D.enabled = false;
         animator.SetBool(id: IsDead, true);
         isDead = true;
-        Instantiate(HitVFX, transform);
+        Instantiate(hitVFX, transform);
         spriteRenderer.enabled = false;
     }
 
@@ -90,7 +78,6 @@ public class PlayerController : MonoBehaviour
     {
         
         transform.position = initPosition;
-        rb.simulated = false;
         boxCollider2D.enabled = true;
         animator.SetBool(IsDead, false);
         isDead = false;
