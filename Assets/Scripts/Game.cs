@@ -51,7 +51,6 @@ public class Game : MonoBehaviour
         gameStatus = GameStatus.GameOver;
         EndGame?.Invoke();
         audioSource.Stop();
-        audioSource.PlayOneShot(explosionSfx);
     }
 
     public void ReStart()

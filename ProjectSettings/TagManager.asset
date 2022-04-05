@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pipe
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

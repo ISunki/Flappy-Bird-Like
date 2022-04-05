@@ -6,11 +6,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float speed = 100f;
-    [SerializeField] bool isDead = false;
-    [SerializeField] Score scoreText;
-    [SerializeField] AudioClip flySound;
-    [SerializeField] GameObject hitVFX;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float fireRate = 1f;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private float health = 10f;
 
+    private bool isFire = false;
     Vector3 initPosition;
 
     Rigidbody2D rb;
@@ -31,23 +32,40 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        initPosition = transform.position;
+        initPosition = transform.localPosition;
 
         game.OnGame += StartGame;
         game.ReStartGame += Init;
+        
+
     }
 
     private void StartGame()
     {
         
     }
+    
+    private float timer = 0;
 
     // Update is called once per frame
     void Update()
     {
         Fly();
-        
+        timer += Time.deltaTime;
+        if (timer > 1 / fireRate && Input.GetButton("Fire1"))
+        {
+            timer = 0;
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+        }
+
+        if (health <= 0)
+        {
+            Die();
+        }
+
     }
+    
 
     private void Fly()
     {        
@@ -55,32 +73,31 @@ public class PlayerController : MonoBehaviour
         var y = Input.GetAxis("Vertical");
         transform.position += new Vector3(x, y) * Time.deltaTime * speed;
     }
-    
-    private void OnTriggerExit2D(Collider2D other)
+
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (other.gameObject.name == "ScoreBoard")
+        if (col.tag.Equals("EnemyBullet"))
         {
-            scoreText.AddScore();      
+            health--;
+            Debug.Log("Player get hit");
         }
     }
 
     private void Die()
     {
         game.GameOver();
-        boxCollider2D.enabled = false;
-        animator.SetBool(id: IsDead, true);
-        isDead = true;
-        Instantiate(hitVFX, transform);
         spriteRenderer.enabled = false;
+        // boxCollider2D.enabled = false;
+        // Instantiate(hitVFX, transform);
+        // animator.SetBool(id: IsDead, true);
     }
 
     private void Init()
     {
-        
-        transform.position = initPosition;
-        boxCollider2D.enabled = true;
-        animator.SetBool(IsDead, false);
-        isDead = false;
+        health = 2f;
         spriteRenderer.enabled = true;
+        transform.localPosition = initPosition;
+        // animator.SetBool(IsDead, false);
+        // boxCollider2D.enabled = true;
     }
 }
