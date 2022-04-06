@@ -3,73 +3,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Character
 {
-    [SerializeField] float speed = 100f;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private float fireRate = 1f;
-    [SerializeField] private Transform firePoint;
     [SerializeField] private HPBar hpBar;
 
     private bool isFire = false;
     Vector3 initPosition;
 
     Rigidbody2D rb;
-    Game game;
     Animator animator;
     AudioSource audioSource;
     BoxCollider2D boxCollider2D;
     SpriteRenderer spriteRenderer;
-    Health health;
-    private static readonly int IsDead = Animator.StringToHash("isDead");
     
+    private static readonly int IsDead = Animator.StringToHash("isDead");
 
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void OnStart()
     {
         rb = GetComponent<Rigidbody2D>();
-        game = GetComponent<Game>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        health = GetComponent<Health>();
+        game = GetComponent<Game>();
+
         initPosition = transform.localPosition;
 
-        game.OnGame += StartGame;
         game.ReStartGame += Init;
-    }
-
-    private void StartGame()
-    {
-        hpBar.UpdateUI(health);
+        Debug.Log("player onstart called");
+        Debug.Log(animator != null);
 
     }
     
-    private float timer = 0;
-
-    // Update is called once per frame
-    void Update()
+    protected override void OnUpdate()
     {
         Fly();
-        timer += Time.deltaTime;
+        Fire();
+    }
+    
+    private static readonly int CollisionTri = Animator.StringToHash("collision");
+
+
+    protected override void Fire()
+    {
         if (timer > 1 / fireRate && Input.GetButton("Fire1") && game.gameStatus == Game.GameStatus.OnGame)
         {
             timer = 0;
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-        }
-
-        if (health.hp <= 0)
-        {
-            Die();
-        }
-
+        }  
     }
-    
 
-    private void Fly()
+
+    protected override void Fly()
     {        
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
@@ -82,15 +68,14 @@ public class PlayerController : MonoBehaviour
         {
             if (col.tag.Equals("Enemy"))
             {
-                health.hp = 0;
-                hpBar.UpdateUI(health);
+                Health.hp = Health.hp - 2f;
+                animator.SetTrigger(CollisionTri);
             }
-            health.hp--;
-            hpBar.UpdateUI(health);
+            Health.hp--;
         }
     }
 
-    private void Die()
+    protected override void Die()
     {
         game.GameOver();
         spriteRenderer.enabled = false;
@@ -99,9 +84,9 @@ public class PlayerController : MonoBehaviour
         // animator.SetBool(id: IsDead, true);
     }
 
-    private void Init()
+    protected override void Init()
     {
-        health.hp = health.iniHp;
+        Health.hp = Health.iniHp;
         spriteRenderer.enabled = true;
         transform.localPosition = initPosition;
         // animator.SetBool(IsDead, false);

@@ -1,22 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
-    private float width;
-
-    private RectTransform barRect;
+    [SerializeField] private float smoothingFactor = 5f;
+    private Slider healthBar;
+    private Health playerHealth;
+    private Game game;
     // Start is called before the first frame update
     void Start()
     {
-        barRect = GetComponent<RectTransform>();
-        width = barRect.sizeDelta.x;
+        healthBar = GetComponent<Slider>();
+        playerHealth = GameObject.FindWithTag("Player").GetComponent<Health>();
+        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+
+        healthBar.maxValue = playerHealth.iniHp;
+
+        Init();
+        game.ReStartGame += Init;
     }
-    
-    public void UpdateUI(Health health)
+
+    private void Init()
     {
-        float widthValue = (health.hp / health.iniHp) * width;
-        barRect.sizeDelta = new Vector2(widthValue, barRect.sizeDelta.y);
+        healthBar.value = playerHealth.iniHp;
+    }
+
+    void Update()
+    {
+        if (!healthBar.value.Equals(playerHealth.hp))
+        {
+            healthBar.value = Mathf.Lerp(healthBar.value, playerHealth.hp, Time.deltaTime * smoothingFactor);
+        }
+          
     }
 }

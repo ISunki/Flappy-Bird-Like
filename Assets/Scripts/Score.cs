@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    [SerializeField] Text scoreText;
-    [SerializeField] Text scoreText2;
-
+    [SerializeField] Text onGameScore;
+    [SerializeField] Text endScore;
+    [SerializeField] Text bestScore;
+    
     int scoreNumber = 0;
+    private int bestNumber = 0;
 
     Game game;
     // Start is called before the first frame update
@@ -17,6 +19,19 @@ public class Score : MonoBehaviour
     {
         game = GameObject.FindWithTag("Player").GetComponent<Game>();
         game.ReStartGame += Init;
+        game.EndGame += EndGame;
+
+        bestNumber = PlayerPrefs.GetInt("bestNumber");
+    }
+
+    private void EndGame()
+    {
+        if (scoreNumber > bestNumber)
+        {
+            bestNumber = scoreNumber;
+        }
+        bestScore.text = bestNumber.ToString();
+        PlayerPrefs.SetInt("bestNumber", bestNumber);
     }
 
     // Update is called once per frame
@@ -27,8 +42,8 @@ public class Score : MonoBehaviour
 
     private void UpdateUI()
     {
-        scoreText.text = scoreNumber.ToString();
-        scoreText2.text = scoreNumber.ToString();
+        onGameScore.text = scoreNumber.ToString();
+        endScore.text = scoreNumber.ToString();
     }
 
     public void AddScore()
@@ -40,5 +55,7 @@ public class Score : MonoBehaviour
     {
         scoreNumber = 0;
     }
+    
+    
 
 }
