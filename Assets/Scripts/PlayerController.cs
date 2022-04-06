@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float health = 10f;
+    [SerializeField] private HPBar hpBar;
 
     private bool isFire = false;
     Vector3 initPosition;
@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour
     AudioSource audioSource;
     BoxCollider2D boxCollider2D;
     SpriteRenderer spriteRenderer;
+    Health health;
     private static readonly int IsDead = Animator.StringToHash("isDead");
+    
 
 
     // Start is called before the first frame update
@@ -32,17 +34,17 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        health = GetComponent<Health>();
         initPosition = transform.localPosition;
 
         game.OnGame += StartGame;
         game.ReStartGame += Init;
-        
-
     }
 
     private void StartGame()
     {
-        
+        hpBar.UpdateUI(health);
+
     }
     
     private float timer = 0;
@@ -52,14 +54,14 @@ public class PlayerController : MonoBehaviour
     {
         Fly();
         timer += Time.deltaTime;
-        if (timer > 1 / fireRate && Input.GetButton("Fire1"))
+        if (timer > 1 / fireRate && Input.GetButton("Fire1") && game.gameStatus == Game.GameStatus.OnGame)
         {
             timer = 0;
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         }
 
-        if (health <= 0)
+        if (health.hp <= 0)
         {
             Die();
         }
@@ -76,10 +78,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag.Equals("EnemyBullet"))
+        if (!col.tag.Equals("PlayerBullet"))
         {
-            health--;
-            Debug.Log("Player get hit");
+            if (col.tag.Equals("Enemy"))
+            {
+                health.hp = 0;
+                hpBar.UpdateUI(health);
+            }
+            health.hp--;
+            hpBar.UpdateUI(health);
         }
     }
 
@@ -94,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     private void Init()
     {
-        health = 2f;
+        health.hp = health.iniHp;
         spriteRenderer.enabled = true;
         transform.localPosition = initPosition;
         // animator.SetBool(IsDead, false);

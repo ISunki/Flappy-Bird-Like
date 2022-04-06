@@ -14,15 +14,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
 
+    private Health health;
     private Game game;
     // Start is called before the first frame update
     void Start()
     {
-        Game game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        health = GetComponent<Health>();
         Init();
     }
-
-
 
     private float timer = 0;
 
@@ -38,8 +38,12 @@ public class Enemy : MonoBehaviour
         }
 
         transform.position += Vector3.left * Time.deltaTime * speed;
-    }
 
+        if (health.hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
     
     public void Init()
     {
@@ -47,7 +51,15 @@ public class Enemy : MonoBehaviour
         transform.position += new Vector3(0,offset,0); 
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("Enemy triggered");
+        if (col.tag.Equals("PlayerBullet"))
+        {
+            health.hp--;
+        }
+    }
+
     private void OnBecameInvisible()
     {
         Destroy(gameObject);

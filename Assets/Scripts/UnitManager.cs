@@ -11,15 +11,15 @@ public class UnitManager : MonoBehaviour
     private Coroutine gen;
     void Start()
     {
-        Game game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        
         game.OnGame += StartGenerate;
         game.EndGame += Stop;
-        game.ReStartGame += StartGenerate;
     }
 
     private void Stop()
     {
-        if (gen != null) StopCoroutine(gen);
+        StopCoroutine(gen);
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
@@ -28,7 +28,7 @@ public class UnitManager : MonoBehaviour
 
     void StartGenerate()
     {
-        Coroutine gen = StartCoroutine(Gen());
+        gen = StartCoroutine(Gen());
     }
     
     IEnumerator Gen()

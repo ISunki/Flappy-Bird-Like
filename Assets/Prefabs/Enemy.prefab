@@ -10,10 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8741650020864000565}
   - component: {fileID: 8741650020864000564}
+  - component: {fileID: 7005967404350992677}
+  - component: {fileID: 8529324251861079239}
   - component: {fileID: 1241959546859481674}
+  - component: {fileID: 8287960648913371320}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,6 +87,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &7005967404350992677
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741650020864000571}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &8529324251861079239
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741650020864000571}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0015518963, y: -0.0023279265}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.48, y: 0.48}
+    newSize: {x: 0.48, y: 0.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.40240443, y: 0.28290707}
+  m_EdgeRadius: 0
 --- !u!114 &1241959546859481674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,9 +148,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minOffset: 0.3
   maxOffset: 1.5
+  speed: 1
   fireRate: 1
   bulletPrefab: {fileID: 938400124154970505, guid: 7bd22ee96cdd42f4e91c7022ed47b88e, type: 3}
   firePoint: {fileID: 1220980918250599867}
+--- !u!114 &8287960648913371320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741650020864000571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb76d00bd58e895489054a01bb410d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iniHp: 1
+  hp: 1
 --- !u!1 &9092598850599952344
 GameObject:
   m_ObjectHideFlags: 0
