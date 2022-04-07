@@ -10,38 +10,27 @@ public class Enemy : Character
     [SerializeField]  float maxOffset = 3;
     
     private Score score;
-    
-    protected override void OnStart()
+
+    protected void Start()
     {
+        OnStart();
         score = FindObjectOfType<Score>();
         Init();
-        Debug.Log("enemy onstart called");
-
+        Debug.Log("enemy start called");
     }
-
-
-    protected override void OnUpdate()
-    {
-        Fly();
-        Fire();
-    }
-
-    protected override void Fire()
-    {
-        if (timer > 1 / fireRate)
-        {
-            timer = 0;
-            GameObject ins = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            ins.transform.SetParent(transform.parent);
-        }
-    }
-
+    
     protected override void Fly()
     {
         transform.position += Vector3.left * Time.deltaTime * speed;
     }
+    
+    protected override void Die()
+    {
+        Destroy(gameObject);
+        score.AddScore();
+    }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    public virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag.Equals("PlayerBullet"))
         {
@@ -53,13 +42,7 @@ public class Enemy : Character
     {
         Destroy(gameObject);
     }
-
-    protected override void Die()
-    {
-        Destroy(gameObject);
-        score.AddScore();
-    }
-
+    
     protected override void Init()
     {
         float offset = Random.Range(minOffset, maxOffset);

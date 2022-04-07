@@ -17,10 +17,12 @@ public class PlayerController : Character
     SpriteRenderer spriteRenderer;
     
     private static readonly int IsDead = Animator.StringToHash("isDead");
+    private static readonly int CollisionTri = Animator.StringToHash("collision");
 
 
-    protected override void OnStart()
+    protected void Start()
     {
+        OnStart();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -33,17 +35,9 @@ public class PlayerController : Character
         game.ReStartGame += Init;
         Debug.Log("player onstart called");
         Debug.Log(animator != null);
-
     }
     
-    protected override void OnUpdate()
-    {
-        Fly();
-        Fire();
-    }
-    
-    private static readonly int CollisionTri = Animator.StringToHash("collision");
-
+    protected override void OnUpdate() { }
 
     protected override void Fire()
     {
@@ -83,9 +77,6 @@ public class PlayerController : Character
     {
         game.GameOver();
         spriteRenderer.enabled = false;
-        // boxCollider2D.enabled = false;
-        // Instantiate(hitVFX, transform);
-        // animator.SetBool(id: IsDead, true);
     }
 
     protected override void Init()
@@ -93,7 +84,6 @@ public class PlayerController : Character
         Health.hp = Health.iniHp;
         spriteRenderer.enabled = true;
         transform.localPosition = initPosition;
-        // animator.SetBool(IsDead, false);
-        // boxCollider2D.enabled = true;
+
     }
 }

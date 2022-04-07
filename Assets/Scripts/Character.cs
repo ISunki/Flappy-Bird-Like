@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-public class Character : MonoBehaviour
+public abstract class Character : MonoBehaviour
 {
     [SerializeField] protected float speed = 1f;
     [SerializeField] protected float fireRate = 1f;
@@ -11,36 +11,42 @@ public class Character : MonoBehaviour
     protected float timer = 0;
     protected Health Health;
     protected Game game;
-
-    private void Start()
+    
+    protected virtual void OnStart()
     {
         game = GameObject.FindWithTag("Player").GetComponent<Game>();
         Health = GetComponent<Health>();
-        OnStart();
     }
-    
-    protected virtual void OnStart() { }
 
     private void Update()
     {
-        OnUpdate();
         timer += Time.deltaTime;
         if (Health != null && Health.hp <= 0)
         {
             Die();
         }
+        Fly();
+        Fire();
+        OnUpdate();
     }
 
-    protected virtual void OnUpdate() { }
+    protected virtual void OnUpdate() {}
 
-    protected virtual void Fire() { }
 
-    protected virtual void Fly() { }
-    
-    protected virtual void Die() { }
-   
-    
-    protected virtual void Init() { }
-    
-    
+    protected virtual void Fire()
+    {
+        if (timer > 1 / fireRate)
+        {
+            timer = 0;
+            GameObject ins = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            ins.transform.SetParent(transform.parent);
+        }
+    }
+
+    protected abstract void Fly();
+
+    protected abstract void Die();
+
+
+    protected abstract void Init();
 }
