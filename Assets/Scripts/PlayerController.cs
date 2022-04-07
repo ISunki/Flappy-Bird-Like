@@ -71,7 +71,11 @@ public class PlayerController : Character
                 Health.hp = Health.hp - 2f;
                 animator.SetTrigger(CollisionTri);
             }
-            Health.hp--;
+            else
+            {
+                Health.hp--;
+                Destroy(col.gameObject);
+            }
         }
     }
 
