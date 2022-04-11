@@ -46,9 +46,9 @@ public class Score : MonoBehaviour
         endScore.text = scoreNumber.ToString();
     }
 
-    public void AddScore()
+    public void AddScore(int scoreToAdd)
     {
-        scoreNumber ++;
+        scoreNumber += scoreToAdd;
     }
 
     private void Init()

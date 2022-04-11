@@ -6,25 +6,27 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
+    [SerializeField] private BulletType bulletType;
 
-    [SerializeField] private bool isEnemyBullet = false;
-    
-    // Start is called before the first frame update
-    void Start()
+    private Vector3 targetPos;
+    private void Start()
     {
+        targetPos = GameObject.FindWithTag("Player").transform.position;
     }
-    
-    // Update is called once per frame
+
     void Update()
     {
-        if (isEnemyBullet)
+        if (bulletType == BulletType.EnemyBullet)
         {
             transform.position += Vector3.left * Time.deltaTime * speed;
+        }
+        else if(bulletType == BulletType.BossBullet)
+        {
+            transform.position += (targetPos - transform.position).normalized * Time.deltaTime * speed;
         }
         else
         {
             transform.position += Vector3.right * Time.deltaTime * speed;
-
         }
     }
 
@@ -32,6 +34,6 @@ public class Projectile : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    
-    
+
+
 }

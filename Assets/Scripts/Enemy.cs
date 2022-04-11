@@ -26,8 +26,8 @@ public class Enemy : Character
     
     protected override void Die()
     {
+        score.AddScore(1);
         Destroy(gameObject);
-        score.AddScore();
     }
 
     public virtual void OnTriggerEnter2D(Collider2D col)

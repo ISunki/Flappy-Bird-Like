@@ -50,7 +50,9 @@ public class PlayerController : Character
 
 
     protected override void Fly()
-    {        
+    {
+        if (game.gameStatus != Game.GameStatus.OnGame) return;
+
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
         transform.position += new Vector3(x, y) * Time.deltaTime * speed;
