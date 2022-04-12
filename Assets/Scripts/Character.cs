@@ -2,8 +2,9 @@ using System;
 using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
-    [SerializeField] protected float speed = 1f;
-    [SerializeField] protected float fireRate = 1f;
+    public float speed = 1f;
+    public float fireRate = 1f;
+    public float power;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firePoint;
 
@@ -14,7 +15,7 @@ public abstract class Character : MonoBehaviour
     
     protected virtual void OnStart()
     {
-        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
         Health = GetComponent<Health>();
     }
 
@@ -47,6 +48,10 @@ public abstract class Character : MonoBehaviour
 
     protected abstract void Die();
 
+    protected virtual void TakeDamage(float damage)
+    {
+        Health.hp -= damage;
+    }
 
     protected abstract void Init();
 }

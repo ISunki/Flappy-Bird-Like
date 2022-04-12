@@ -11,7 +11,7 @@ public class UnitManager : MonoBehaviour
     private Coroutine gen;
     void Start()
     {
-        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
         
         game.OnGame += StartGenerate;
         game.EndGame += Stop;
@@ -39,7 +39,6 @@ public class UnitManager : MonoBehaviour
             ins.transform.SetParent(transform);
             yield return new WaitForSeconds(waitTime);
         }
-
     }
     
 }

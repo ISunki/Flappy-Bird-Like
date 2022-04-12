@@ -21,13 +21,14 @@ public class Boss : Enemy
         target = GameObject.FindWithTag("Player").transform;
         animator = GetComponent<Animator>();
         score = FindObjectOfType<Score>();
+        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
+        StartGame();
     }
 
     protected override void OnUpdate()
     {
         Vector3 dir = (target.transform.position - gun.position).normalized;
         gun.rotation = Quaternion.FromToRotation(Vector3.left, dir);
-        game.OnGame += StartGame;
     }
 
     void StartGame()

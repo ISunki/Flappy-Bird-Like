@@ -28,7 +28,7 @@ public class PlayerController : Character
         audioSource = GetComponent<AudioSource>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        game = GetComponent<Game>();
+        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
 
         initPosition = transform.localPosition;
 
@@ -69,7 +69,7 @@ public class PlayerController : Character
             }
             else
             {
-                Health.hp--;
+                TakeDamage(col.GetComponent<Projectile>().power);
                 Destroy(col.gameObject);
             }
         }

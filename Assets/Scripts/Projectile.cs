@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
     [SerializeField] private BulletType bulletType;
+    public float power = 1f;
 
     private Vector3 targetPos;
     private void Start()

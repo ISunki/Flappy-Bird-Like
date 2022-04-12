@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
 
-public class Missile : MonoBehaviour
+public class Missile : Projectile
 {
     [SerializeField] private float speed = 1f;
     [SerializeField] private float lifetime = 5f;

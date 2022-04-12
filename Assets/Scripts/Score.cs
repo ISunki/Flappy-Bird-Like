@@ -17,7 +17,7 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
         game.ReStartGame += Init;
         game.EndGame += EndGame;
 

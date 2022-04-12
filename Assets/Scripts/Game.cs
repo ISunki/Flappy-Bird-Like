@@ -50,7 +50,6 @@ public class Game : MonoBehaviour
     {
         gameStatus = GameStatus.GameOver;
         EndGame?.Invoke();
-        audioSource.Stop();
     }
 
     public void ReStart()

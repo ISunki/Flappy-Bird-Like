@@ -14,7 +14,7 @@ public class HPBar : MonoBehaviour
     {
         healthBar = GetComponent<Slider>();
         playerHealth = GameObject.FindWithTag("Player").GetComponent<Health>();
-        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game = GameObject.FindObjectOfType<Game>();
 
         healthBar.maxValue = playerHealth.iniHp;
 

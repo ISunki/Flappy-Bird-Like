@@ -9,7 +9,7 @@ public class Camera : MonoBehaviour
     private Game game;
     void Start()
     {
-        game = GameObject.FindWithTag("Player").GetComponent<Game>();
+        game = GameObject.FindObjectOfType<Game>();
         game.OnGame += StartGame;
         game.EndGame += EndGame;
     }
