@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpawnRule : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] public GameObject enemyPrefab;
     [SerializeField] private float spawnTime;
     [SerializeField] private float waitTime;
     [SerializeField] private int maxAmount;

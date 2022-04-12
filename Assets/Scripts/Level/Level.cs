@@ -9,6 +9,8 @@ public class Level : MonoBehaviour
     [SerializeField] private int levelID;
     [SerializeField] private float bossSpawnTime = 30f;
     [SerializeField] private GameObject bossPrefab;
+    [SerializeField] private float bossHp;
+
     public List<SpawnRule> rules = new List<SpawnRule>();
 
     private bool isBossSpawned = false;
@@ -21,7 +23,7 @@ public class Level : MonoBehaviour
         bossParent = FindObjectOfType<Camera>().transform;
         for (int i = 0; i < rules.Count ; i++)
         {
-            SpawnRule rule = Instantiate<SpawnRule>(rules[i]);
+            SpawnRule rule = Instantiate<SpawnRule>(rules[i], transform);
         }
     }
 
@@ -31,7 +33,7 @@ public class Level : MonoBehaviour
         if (timeSinceStart > bossSpawnTime & !isBossSpawned)
         {
             GameObject boss = Instantiate(bossPrefab, bossParent);
-            
+            boss.GetComponent<Health>().iniHp = bossHp;
             isBossSpawned = true;
         }
     }

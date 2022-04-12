@@ -81,6 +81,8 @@ public class Boss : Enemy
     {
         score.AddScore(10);
         Destroy(gameObject);
+        game.isSuccess = true;
+        game.GameOver();
     }
 
 }

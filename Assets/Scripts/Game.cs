@@ -19,20 +19,10 @@ public class Game : MonoBehaviour
     public event Action OnGame;
     public event Action EndGame;
     public event Action ReStartGame;
-
-    private AudioSource audioSource;
-
-    public GameStatus gameStatus = GameStatus.Ready;
     
-
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
+    public GameStatus gameStatus = GameStatus.Ready;
+    public bool isSuccess = false;
+    
     private void Update()
     {
         readyPanel.SetActive(gameStatus == GameStatus.Ready);
@@ -56,6 +46,5 @@ public class Game : MonoBehaviour
     {
         gameStatus = GameStatus.Ready;
         ReStartGame?.Invoke();
-        audioSource.Play();
     }
 }
