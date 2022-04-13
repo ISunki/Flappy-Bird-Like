@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour
     {
         targetPos = GameObject.FindWithTag("Player").transform.position;
     }
+    
 
     void Update()
     {
@@ -29,6 +30,11 @@ public class Projectile : MonoBehaviour
         {
             transform.position += Vector3.right * Time.deltaTime * speed;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Destroy(gameObject);
     }
 
     private void OnBecameInvisible()

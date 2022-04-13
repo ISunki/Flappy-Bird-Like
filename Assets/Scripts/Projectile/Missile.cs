@@ -12,9 +12,7 @@ public class Missile : Projectile
     
     private Rigidbody2D rb;
     private Transform target;
-
     
-    // Start is called before the first frame update
     void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
@@ -23,13 +21,6 @@ public class Missile : Projectile
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-        
-
-    }
 
     private void FixedUpdate()
     {

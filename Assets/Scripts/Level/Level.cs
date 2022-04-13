@@ -17,6 +17,7 @@ public class Level : MonoBehaviour
     private float timeSinceStart = 0f;
     
     Transform bossParent;
+    private GameObject boss;
     
     void Start()
     {
@@ -25,14 +26,21 @@ public class Level : MonoBehaviour
         {
             SpawnRule rule = Instantiate<SpawnRule>(rules[i], transform);
         }
+
+        Game.Instance.EndGame += EndGame;
     }
 
-    void Update()
+    private void EndGame()
+    {
+        if (boss != null) Destroy(boss);
+    }
+
+    void Update() 
     {
         timeSinceStart += Time.deltaTime;
         if (timeSinceStart > bossSpawnTime & !isBossSpawned)
         {
-            GameObject boss = Instantiate(bossPrefab, bossParent);
+            boss = Instantiate(bossPrefab, bossParent);
             boss.GetComponent<Health>().iniHp = bossHp;
             isBossSpawned = true;
         }

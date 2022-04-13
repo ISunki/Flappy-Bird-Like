@@ -736,11 +736,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  fireRate: 1
+  fireRate: 2
   power: 0
   bulletPrefab: {fileID: 938400124154970505, guid: 89015043584a7a642beb5c167c95eba7, type: 3}
   firePoint: {fileID: 838237525}
   hpBar: {fileID: 29851838}
+  invincibleTime: 10
 --- !u!50 &291693400
 Rigidbody2D:
   serializedVersion: 4
@@ -1453,7 +1454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -3004,10 +3005,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055e239962ccdfc4285f4c4660a827af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelText: {fileID: 466623697}
+  nextLevelText: {fileID: 1609258537}
   levels:
   - {fileID: -5547870637769036291, guid: 235e60d64a14dca46b7d3cb574f9bce9, type: 3}
   - {fileID: -5547870637769036291, guid: a824a6dcf00a1e34cb67a813bdc49587, type: 3}
-  levelText: {fileID: 466623697}
   currentLevelID: 1
   level: {fileID: 0}
 --- !u!4 &1824098064
@@ -3926,7 +3928,6 @@ MonoBehaviour:
   readyPanel: {fileID: 1237323297}
   onGamePanel: {fileID: 1926362340}
   gameOverPanel: {fileID: 458936453}
-  explosionSfx: {fileID: 8300000, guid: 1fd31868d68903d4f9e2c4a3b7ef98f3, type: 3}
   gameStatus: 0
   isSuccess: 0
 --- !u!1 &2119221853

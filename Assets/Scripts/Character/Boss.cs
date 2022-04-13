@@ -13,26 +13,24 @@ public class Boss : Enemy
         
     private Transform target;
     private Animator animator;
-    private Score score;
 
     void Start()
     {
         OnStart();
         target = GameObject.FindWithTag("Player").transform;
         animator = GetComponent<Animator>();
-        score = FindObjectOfType<Score>();
-        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
         StartGame();
     }
 
     protected override void OnUpdate()
     {
-        Vector3 dir = (target.transform.position - gun.position).normalized;
+        Vector3 dir = (target.position - gun.position).normalized;
         gun.rotation = Quaternion.FromToRotation(Vector3.left, dir);
     }
 
     void StartGame()
     {
+        game.isSuccess = false;
         StartCoroutine(StartMove());
     }
 
@@ -79,7 +77,7 @@ public class Boss : Enemy
 
     protected override void Die()
     {
-        score.AddScore(10);
+        Score.Instance.AddScore(10);
         Destroy(gameObject);
         game.isSuccess = true;
         game.GameOver();

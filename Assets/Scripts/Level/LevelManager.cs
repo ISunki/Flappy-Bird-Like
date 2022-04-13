@@ -4,27 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoSingleton<LevelManager>
 {
-    public List<Level> levels;
     [SerializeField] private Text levelText;
+    [SerializeField] private Text nextLevelText;
 
+
+    public List<Level> levels;
     public int currentLevelID = 1;
-
     public Level level;
 
-    private Game game;
-
-    
-    // Start is called before the first frame update
     void Start()
     {
-        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
-        game.OnGame += StartGame;
-        game.EndGame += EndGame;
-        game.ReStartGame += StartGame;
+        Game.Instance.OnGame += StartGame;
+        Game.Instance.EndGame += EndGame;
+        Game.Instance.ReStartGame += StartGame;
     }
-
+    
     private void UpdateUI()
     {
         levelText.text = "Level " + currentLevelID;
@@ -32,9 +28,14 @@ public class LevelManager : MonoBehaviour
 
     private void EndGame()
     {
-        if (game.isSuccess)
+        if (Game.Instance.isSuccess)
         {
             currentLevelID++;
+            nextLevelText.text = "Next Level";
+        }
+        else
+        {
+            nextLevelText.text = "Try again";
         }
         foreach (Transform child in transform)
         {
@@ -53,9 +54,4 @@ public class LevelManager : MonoBehaviour
         level = Instantiate<Level>(levels[levelID - 1], transform);
     }
     
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

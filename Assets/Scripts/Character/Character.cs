@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-public abstract class Character : MonoBehaviour
+public abstract class Character : MonoSingleton<Character>
 {
     public float speed = 1f;
     public float fireRate = 1f;
@@ -15,7 +15,7 @@ public abstract class Character : MonoBehaviour
     
     protected virtual void OnStart()
     {
-        game = GameObject.FindObjectOfType<Game>().GetComponent<Game>();
+        game = Game.Instance;
         Health = GetComponent<Health>();
     }
 

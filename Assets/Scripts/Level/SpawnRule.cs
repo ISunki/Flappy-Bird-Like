@@ -19,9 +19,18 @@ public class SpawnRule : MonoBehaviour
     private void Start()
     {
         spawnPoint = GameObject.FindWithTag("SpawnPoint").transform;
+        Game.Instance.EndGame += EndGame;
         StartGenerate();
     }
-    
+
+    private void EndGame()
+    {
+        foreach (Transform child in spawnPoint)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     void StartGenerate()
     {
         StartCoroutine(Gen());

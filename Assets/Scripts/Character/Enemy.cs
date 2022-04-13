@@ -9,14 +9,10 @@ public class Enemy : Character
     [SerializeField]  float minOffset = -3;
     [SerializeField]  float maxOffset = 3;
     
-    private Score score;
-
     protected void Start()
     {
         OnStart();
-        score = FindObjectOfType<Score>();
         Init();
-        Debug.Log("enemy start called");
     }
     
     protected override void Fly()
@@ -26,7 +22,7 @@ public class Enemy : Character
     
     protected override void Die()
     {
-        score.AddScore(1);
+        Score.Instance.AddScore(1);
         Destroy(gameObject);
     }
 
@@ -35,6 +31,7 @@ public class Enemy : Character
         if (col.tag.Equals("PlayerBullet"))
         {
             Health.hp--;
+            Destroy(col.gameObject);
         }
     }
 
