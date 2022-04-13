@@ -7,13 +7,13 @@ public class PlayerController : Character
 {
     [SerializeField] private HPBar hpBar;
     [SerializeField] private float invincibleTime;
+    [SerializeField] private AudioClip shotSFX;
 
     private bool isFire = false;
     Vector3 initPosition;
 
     Rigidbody2D rb;
     Animator animator;
-    AudioSource audioSource;
     BoxCollider2D boxCollider2D;
     SpriteRenderer spriteRenderer;
     
@@ -26,13 +26,12 @@ public class PlayerController : Character
         OnStart();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        
         initPosition = transform.localPosition;
 
-        game.ReStartGame += Init;
+        game.OnGame += Init;
     }
     
     protected override void OnUpdate() { }
@@ -43,6 +42,7 @@ public class PlayerController : Character
         {
             timer = 0;
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Game.Instance.PlayOneShot(shotSFX);
         }  
     }
 
@@ -58,29 +58,35 @@ public class PlayerController : Character
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (!col.tag.Equals("PlayerBullet"))
+        if (col.tag.Equals("Enemy"))
         {
-            if (col.tag.Equals("Enemy"))
-            {
-                Health.hp = Health.hp - 2f;
-                animator.SetTrigger(CollisionTri);
-            }
-            else
-            {
-                TakeDamage(col.GetComponent<Projectile>().power);
-                Destroy(col.gameObject);
-            }
+            Health.hp = Health.hp - 2f;
+            animator.SetTrigger(CollisionTri);
+        }
+        if (col.tag.Equals("EnemyBullet"))
+        {
+            TakeDamage(col.GetComponent<Projectile>().power);
+            Destroy(col.gameObject);
+        }
+        if (col.tag.Equals("Missile"))
+        {
+            TakeDamage(col.GetComponent<Projectile>().power);
+            Destroy(col.gameObject);
         }
     }
 
     protected override void Die()
     {
+        isDead = true;
         game.GameOver();
         spriteRenderer.enabled = false;
+        Instantiate(expolosionVFX, transform.position, Quaternion.identity);
+        Game.Instance.PlayOneShot(expolosionSFX);
     }
 
     protected override void Init()
     {
+        isDead = false;
         Health.hp = Health.iniHp;
         spriteRenderer.enabled = true;
         transform.localPosition = initPosition;

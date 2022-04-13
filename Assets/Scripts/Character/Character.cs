@@ -5,13 +5,15 @@ public abstract class Character : MonoSingleton<Character>
     public float speed = 1f;
     public float fireRate = 1f;
     public float power;
+    public AudioClip expolosionSFX;
+    [SerializeField] protected GameObject expolosionVFX;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firePoint;
-
-
+    
     protected float timer = 0;
     protected Health Health;
     protected Game game;
+    protected bool isDead = false;
     
     protected virtual void OnStart()
     {
@@ -22,7 +24,7 @@ public abstract class Character : MonoSingleton<Character>
     private void Update()
     {
         timer += Time.deltaTime;
-        if (Health != null && Health.hp <= 0)
+        if (Health.hp <= 0 && !isDead)
         {
             Die();
         }

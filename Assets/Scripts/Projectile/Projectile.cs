@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 2f;
+    public float speed = 2f;
     [SerializeField] private BulletType bulletType;
     public float power = 1f;
 
@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour
         {
             transform.position += (targetPos - transform.position).normalized * Time.deltaTime * speed;
         }
-        else
+        else if(bulletType == BulletType.PlayerBullet)
         {
             transform.position += Vector3.right * Time.deltaTime * speed;
         }

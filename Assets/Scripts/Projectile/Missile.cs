@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Missile : Projectile
 {
-    [SerializeField] private float speed = 1f;
     [SerializeField] private float lifetime = 5f;
     [SerializeField] private float angleChangingSpeed = 100f;
     

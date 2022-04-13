@@ -13,12 +13,12 @@ public class LevelManager : MonoSingleton<LevelManager>
     public List<Level> levels;
     public int currentLevelID = 1;
     public Level level;
+    public int totalNum => levels.Count;
 
     void Start()
     {
         Game.Instance.OnGame += StartGame;
         Game.Instance.EndGame += EndGame;
-        Game.Instance.ReStartGame += StartGame;
     }
     
     private void UpdateUI()
@@ -41,6 +41,7 @@ public class LevelManager : MonoSingleton<LevelManager>
         {
             Destroy(child.gameObject);
         }
+        Destroy(level);
     }
 
     void StartGame()

@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class Enemy : Character
 {
+    [SerializeField] private GameObject potion;
+    [SerializeField] private float dropRate = 50;
     [SerializeField]  float minOffset = -3;
     [SerializeField]  float maxOffset = 3;
     
@@ -23,7 +25,19 @@ public class Enemy : Character
     protected override void Die()
     {
         Score.Instance.AddScore(1);
+        DrppPotion();
+        Game.Instance.PlayOneShot(expolosionSFX);
+        Instantiate(expolosionVFX,transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    private void DrppPotion()
+    {
+        float random = Random.Range(0, 100);
+        if (dropRate > random)
+        {
+            Instantiate(potion, transform.position + new Vector3(0,0.5f), Quaternion.identity);
+        }
     }
 
     public virtual void OnTriggerEnter2D(Collider2D col)

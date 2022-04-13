@@ -146,12 +146,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169f0a66c01630b4db587a8ecd4069d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minOffset: 0.3
-  maxOffset: 1.5
   speed: 1
   fireRate: 1
+  power: 0
+  expolosionSFX: {fileID: 8300000, guid: 1fd31868d68903d4f9e2c4a3b7ef98f3, type: 3}
+  expolosionVFX: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
   bulletPrefab: {fileID: 938400124154970505, guid: 7bd22ee96cdd42f4e91c7022ed47b88e, type: 3}
   firePoint: {fileID: 1220980918250599867}
+  potion: {fileID: 4729520157630555420, guid: cb2289577ea807f47a7a8defb4325197, type: 3}
+  dropRate: 25
+  minOffset: 0.3
+  maxOffset: 1.5
 --- !u!114 &8287960648913371320
 MonoBehaviour:
   m_ObjectHideFlags: 0

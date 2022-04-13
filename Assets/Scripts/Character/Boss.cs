@@ -10,6 +10,7 @@ public class Boss : Enemy
     [SerializeField] private Transform misslePoint;
     [SerializeField] private Transform gun;
     [SerializeField] private float moveSpeed = 0.5f;
+
         
     private Transform target;
     private Animator animator;
@@ -78,9 +79,18 @@ public class Boss : Enemy
     protected override void Die()
     {
         Score.Instance.AddScore(10);
-        Destroy(gameObject);
         game.isSuccess = true;
-        game.GameOver();
+        if (LevelManager.Instance.currentLevelID == LevelManager.Instance.totalNum)
+        {
+            game.ClearGame();
+        }
+        else
+        {
+            game.GameOver();
+            game.PlayOneShot(expolosionSFX);
+        }
+        Instantiate(expolosionVFX,transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
 }
